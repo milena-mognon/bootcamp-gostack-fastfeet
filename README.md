@@ -2,10 +2,6 @@
   <img alt="Fastfeet" title="Fastfeet" src=".github/logo.png" width="300px" />
 </h1>
 
-<h3 align="center">
-  FastFeet
-</h3>
-
 <p>FastFeet é uma aplicação completa (Back-end, Front-end e Mobile) que é avaliada para emissão do Certificado do Bootcamp GoStack.</p>
 
 ## :rocket: Sobre
@@ -18,11 +14,11 @@ A aplicação será criada do zero utilizando o [Express](https://expressjs.com/
 
 - Sucrase + Nodemon;
 - ESLint + Prettier + EditorConfig;
-- Sequelize (Utilize PostgreSQL ou MySQL);
+- Sequelize + PostgreSQL ;
 
 ### **Funcionalidades**
 
-Abaixo estão listas as funcionalidades da aplicação.
+Abaixo estão listadas as funcionalidades da aplicação.
 
 ### **1. Autenticação**
 
