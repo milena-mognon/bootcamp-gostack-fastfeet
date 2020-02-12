@@ -1,11 +1,13 @@
 import Sequelize from 'sequelize';
 import User from '../app/models/User';
 import Recipient from '../app/models/Recipient';
+import File from '../app/models/File';
+import Deliveryman from '../app/models/Deliveryman';
 
 import databaseConfig from '../config/database';
 
 // Array com o nome dos models
-const models = [User, Recipient];
+const models = [User, Recipient, File, Deliveryman];
 
 /**
  * Loader de Models
@@ -20,8 +22,11 @@ class Database {
     // agora existe a conexão com a base de dados
     this.connection = new Sequelize(databaseConfig);
 
-    // percorrer o array e retornar o init que espera receber a conexão
-    models.map(model => model.init(this.connection));
+    // percorrer o array de models e retornar o método init que espera receber
+    // a conexão
+    models
+      .map(model => model.init(this.connection))
+      .map(model => model.associate && model.associate(this.connection.models));
   }
 }
 
