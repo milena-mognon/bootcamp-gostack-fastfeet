@@ -2,12 +2,18 @@ import * as Yup from 'yup';
 import Recipient from '../models/Recipient';
 
 class RecipientController {
+  /**
+   * List all the recipients
+   */
   async index(req, res) {
     const users = await Recipient.findAll();
 
     return res.json(users);
   }
 
+  /**
+   * Create a recipient
+   */
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -32,6 +38,9 @@ class RecipientController {
     });
   }
 
+  /**
+   * Update a Recipient
+   */
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().notOneOf([null, '']),

@@ -2,7 +2,7 @@ import File from '../models/File';
 
 class FileController {
   /**
-   * Cadastro de Arquivos/Imagens
+   * Create a file
    */
   async store(req, res) {
     const { originalname: name, filename: path } = req.file;

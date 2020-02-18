@@ -35,7 +35,7 @@ class OrderController {
   }
 
   /**
-   * Create an Order
+   * Create an order
    */
   async store(req, res) {
     const schema = Yup.object().shape({

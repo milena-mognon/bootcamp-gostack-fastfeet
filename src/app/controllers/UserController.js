@@ -2,11 +2,17 @@ import * as Yup from 'yup';
 import User from '../models/User';
 
 class UserController {
+  /**
+   * List all the users
+   */
   async index(req, res) {
     const users = await User.findAll();
     return res.json(users);
   }
 
+  /**
+   * Create a users
+   */
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -40,7 +46,7 @@ class UserController {
   }
 
   /**
-   * Fazer Middleware para verificar se o usuário existe
+   * Show one users
    */
   async show(req, res) {
     const { id } = req.params;
@@ -58,6 +64,9 @@ class UserController {
     });
   }
 
+  /**
+   * Update a users
+   */
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
