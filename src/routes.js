@@ -7,6 +7,7 @@ import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
 import DeliveryPickupController from './app/controllers/DeliveryPickupController';
+import DeliveryCompleteController from './app/controllers/DeliveryCompleteController';
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
 
@@ -39,5 +40,10 @@ routes.post('/deliveries', DeliveryController.store);
 routes.get('/deliveries', DeliveryController.index);
 
 routes.put('/deliveries/:id/pickup', DeliveryPickupController.update);
+routes.put(
+  '/deliveries/:id/complete',
+  upload.single('file'),
+  DeliveryCompleteController.update
+);
 
 export default routes;
