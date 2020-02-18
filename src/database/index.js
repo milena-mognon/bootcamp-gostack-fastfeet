@@ -3,12 +3,12 @@ import User from '../app/models/User';
 import Recipient from '../app/models/Recipient';
 import File from '../app/models/File';
 import Deliveryman from '../app/models/Deliveryman';
-import Order from '../app/models/Order';
+import Delivery from '../app/models/Delivery';
 
 import databaseConfig from '../config/database';
 
 // Array com o nome dos models
-const models = [User, Recipient, File, Deliveryman, Order];
+const models = [User, Recipient, File, Deliveryman, Delivery];
 
 /**
  * Loader de Models

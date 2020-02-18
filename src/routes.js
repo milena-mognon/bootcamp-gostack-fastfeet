@@ -5,7 +5,8 @@ import RecipientController from './app/controllers/RecipientController';
 import UserController from './app/controllers/UserController';
 import FileController from './app/controllers/FileController';
 import DeliverymanController from './app/controllers/DeliverymanController';
-import OrderController from './app/controllers/OrderController';
+import DeliveryController from './app/controllers/DeliveryController';
+import DeliveryPickupController from './app/controllers/DeliveryPickupController';
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
 
@@ -34,7 +35,9 @@ routes.post('/deliverymen', DeliverymanController.store);
 routes.put('/deliverymen/:id', DeliverymanController.update);
 routes.delete('/deliverymen/:id', DeliverymanController.delete);
 
-routes.post('/orders', OrderController.store);
-routes.get('/orders', OrderController.index);
+routes.post('/deliveries', DeliveryController.store);
+routes.get('/deliveries', DeliveryController.index);
+
+routes.put('/deliveries/:id/pickup', DeliveryPickupController.update);
 
 export default routes;

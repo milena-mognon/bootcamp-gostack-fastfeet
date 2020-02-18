@@ -1,14 +1,14 @@
 import * as Yup from 'yup';
-import Order from '../models/Order';
+import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 
-class OrderController {
+class DeliveryController {
   /**
-   * List all the orders
+   * List all the deliveries
    */
   async index(req, res) {
-    const orders = await Order.findAll({
+    const deliveries = await Delivery.findAll({
       attributes: ['id', 'product', 'start_date', 'end_date'],
       include: [
         {
@@ -31,11 +31,11 @@ class OrderController {
         },
       ],
     });
-    return res.json(orders);
+    return res.json(deliveries);
   }
 
   /**
-   * Create an order
+   * Create an Delivery
    */
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -62,7 +62,7 @@ class OrderController {
       return res.status(400).json({ error: 'Deliveryman does not exist' });
     }
 
-    const { product } = await Order.create(req.body);
+    const { product } = await Delivery.create(req.body);
 
     return res.json({
       product,
@@ -72,4 +72,4 @@ class OrderController {
   }
 }
 
-export default new OrderController();
+export default new DeliveryController();
