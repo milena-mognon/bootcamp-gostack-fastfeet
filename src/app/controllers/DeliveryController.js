@@ -96,6 +96,47 @@ class DeliveryController {
   }
 
   /**
+   * Update a Delivery
+   */
+  async update(req, res) {
+    const { id } = req.params;
+
+    const schema = Yup.object().shape({
+      product: Yup.string().notOneOf(['', null]),
+      deliveryman_id: Yup.number(),
+      recipient_id: Yup.number(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation Fails' });
+    }
+
+    const delivery = await Delivery.findByPk(id);
+
+    if (!delivery) {
+      return res.status(400).json({ error: 'Delivery not found' });
+    }
+
+    const { deliveryman_id, recipient_id } = req.body;
+
+    const recipient = await Recipient.findByPk(recipient_id);
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Recipient does not exist' });
+    }
+
+    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
+
+    if (!deliveryman) {
+      return res.status(400).json({ error: 'Deliveryman does not exist' });
+    }
+
+    await delivery.update(req.body);
+
+    return res.json(delivery);
+  }
+
+  /**
    * Delete a Delivery
    */
   async delete(req, res) {
