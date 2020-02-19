@@ -9,12 +9,12 @@ class NewDeliveryMail {
   // handle será chamado para cada job, neste caso, o envio de cada email
   async handle({ data }) {
     const { delivery } = data;
-    console.log(delivery);
     await Mail.sendMail({
       to: `${delivery.deliveryman.name} < ${delivery.deliveryman.email} >`,
       subject: 'Nova Encomenda Cadastrada para Entrega',
       template: 'new_delivery',
       context: {
+        product: delivery.product,
         deliveryman: delivery.deliveryman.name,
         recipient: delivery.recipient.name,
         address: {
