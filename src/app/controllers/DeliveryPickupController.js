@@ -1,4 +1,5 @@
-import { getHours } from 'date-fns';
+import { getHours, startOfDay, endOfDay } from 'date-fns';
+import { Op } from 'sequelize';
 import Delivery from '../models/Delivery';
 
 class DeliveryPickupController {
@@ -20,6 +21,21 @@ class DeliveryPickupController {
       return res.status(400).json({
         error: 'You cannot pickup deliveries out of business hours',
       });
+    }
+
+    const deliveryman_withdrawals = await Delivery.count({
+      where: {
+        deliveryman_id: delivery.deliveryman_id,
+        start_date: {
+          [Op.between]: [startOfDay(new Date()), endOfDay(new Date())],
+        },
+      },
+    });
+
+    if (deliveryman_withdrawals === 5) {
+      return res
+        .status(400)
+        .json({ error: 'you can no longer withdraw deliveries today' });
     }
 
     delivery.start_date = new Date();
