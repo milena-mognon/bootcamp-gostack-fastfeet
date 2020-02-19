@@ -37,7 +37,7 @@ class DeliveryController {
   }
 
   /**
-   * Create an Delivery
+   * Create a Delivery
    */
   async store(req, res) {
     const schema = Yup.object().shape({
@@ -93,6 +93,23 @@ class DeliveryController {
     });
 
     return res.json(delivery);
+  }
+
+  /**
+   * Delete a Delivery
+   */
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const delivery = await Delivery.findByPk(id);
+
+    if (!delivery) {
+      return res.status(400).json({ error: 'Delivery not found ' });
+    }
+
+    await delivery.destroy();
+
+    return res.json({ message: 'successfully deleted' });
   }
 }
 
