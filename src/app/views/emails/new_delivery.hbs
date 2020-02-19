@@ -1,0 +1,8 @@
+<strong>Olá, {{ deliveryman }}</strong>
+<p>Você tem uma nova encomenda para entrega. Segue os detalhe: </p>
+<p>
+  <strong>Destinatário: </strong> {{ recipient }}
+  <br>
+  <strong>Endereço: </strong> {{ address.street }},
+  Nº {{ address.number }} - {{ address.complement}} - {{ address.city }}, {{ address.state }}
+</p>

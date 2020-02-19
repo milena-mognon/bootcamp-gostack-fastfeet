@@ -2,6 +2,8 @@ import * as Yup from 'yup';
 import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
+import Queue from '../../lib/Queue';
+import NewDeliveryMail from '../jobs/NewDeliveryMail';
 
 class DeliveryController {
   /**
@@ -50,25 +52,47 @@ class DeliveryController {
 
     const { deliveryman_id, recipient_id } = req.body;
 
-    const recipientExist = await Recipient.findByPk(recipient_id);
+    const recipient = await Recipient.findByPk(recipient_id);
 
-    if (!recipientExist) {
+    if (!recipient) {
       return res.status(400).json({ error: 'Recipient does not exist' });
     }
 
-    const deliverymanExist = await Deliveryman.findByPk(deliveryman_id);
+    const deliveryman = await Deliveryman.findByPk(deliveryman_id);
 
-    if (!deliverymanExist) {
+    if (!deliveryman) {
       return res.status(400).json({ error: 'Deliveryman does not exist' });
     }
 
-    const { product } = await Delivery.create(req.body);
+    const { id } = await Delivery.create(req.body);
 
-    return res.json({
-      product,
-      deliveryman_id,
-      recipient_id,
+    const delivery = await Delivery.findByPk(id, {
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'name',
+            'address',
+            'number',
+            'complement',
+            'city',
+            'state',
+          ],
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['name', 'email'],
+        },
+      ],
     });
+
+    await Queue.add(NewDeliveryMail.key, {
+      delivery,
+    });
+
+    return res.json(delivery);
   }
 }
 

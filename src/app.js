@@ -1,5 +1,6 @@
+import 'dotenv/config';
+
 import express from 'express';
-// importa as rotas do arquivo routes.js
 import { resolve } from 'path';
 import routes from './routes';
 
