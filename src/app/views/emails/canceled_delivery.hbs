@@ -1,9 +1,11 @@
 <strong>Olá, {{ deliveryman }}</strong>
-<p>Você tem uma nova encomenda disponível para a retirada. Segue os detalhes: </p>
+<p>A entrega de uma encomenda foi cancelada. Segue os detalhes: </p>
 <p>
+  <strong>Data do cancelamento: </strong> {{ date }} <br>
   <strong>Produto: </strong> {{ product }} <br>
   <strong>Destinatário: </strong> {{ recipient }}
   <br>
   <strong>Endereço: </strong> {{ address.street }},
   Nº {{ address.number }} - {{ address.complement}} - {{ address.city }}, {{ address.state }}
+  <br><strong>Problema: </strong> {{ delivery_problem.description }}<br>
 </p>
