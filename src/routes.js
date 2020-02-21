@@ -8,6 +8,8 @@ import DeliverymanController from './app/controllers/DeliverymanController';
 import DeliveryController from './app/controllers/DeliveryController';
 import DeliveryPickupController from './app/controllers/DeliveryPickupController';
 import DeliveryCompleteController from './app/controllers/DeliveryCompleteController';
+import DeliveryProblemController from './app/controllers/DeliveryProblemController';
+import DeliveriesProblemsController from './app/controllers/DeliveriesProblemsController';
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
 
@@ -15,6 +17,20 @@ const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post('/session', SessionController.store);
+
+/**
+ * Rotas do Entregador - Sem autenticação
+ */
+routes.put('/deliveries/:id/pickup', DeliveryPickupController.update);
+routes.put(
+  '/deliveries/:id/complete',
+  upload.single('file'),
+  DeliveryCompleteController.update
+);
+
+routes.get('/deliveries/problems', DeliveriesProblemsController.index);
+routes.post('/delivery/:id/problems', DeliveryProblemController.store);
+routes.get('/delivery/:id/problems', DeliveryProblemController.index);
 
 routes.use(authMiddleware);
 /**
@@ -40,12 +56,5 @@ routes.post('/deliveries', DeliveryController.store);
 routes.get('/deliveries', DeliveryController.index);
 routes.delete('/deliveries/:id', DeliveryController.delete);
 routes.put('/deliveries/:id', DeliveryController.update);
-
-routes.put('/deliveries/:id/pickup', DeliveryPickupController.update);
-routes.put(
-  '/deliveries/:id/complete',
-  upload.single('file'),
-  DeliveryCompleteController.update
-);
 
 export default routes;
