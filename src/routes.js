@@ -10,6 +10,7 @@ import DeliveryPickupController from './app/controllers/DeliveryPickupController
 import DeliveryCompleteController from './app/controllers/DeliveryCompleteController';
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
 import DeliveriesProblemsController from './app/controllers/DeliveriesProblemsController';
+import CancelDeliveryController from './app/controllers/CancelDeliveryController';
 import authMiddleware from './app/middlewares/auth';
 import multerConfig from './config/multer';
 
@@ -56,5 +57,10 @@ routes.post('/deliveries', DeliveryController.store);
 routes.get('/deliveries', DeliveryController.index);
 routes.delete('/deliveries/:id', DeliveryController.delete);
 routes.put('/deliveries/:id', DeliveryController.update);
+
+routes.delete(
+  '/problem/:problem_id/cancel-delivery',
+  CancelDeliveryController.delete
+);
 
 export default routes;
